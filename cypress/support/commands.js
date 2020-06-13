@@ -37,3 +37,11 @@
 //       log.snapshot().end()
 //     })
 // })
+
+Cypress.Commands.add("safeGet", (locator, options) => {
+  return cy
+    .get(locator)
+    .should("have.length", 1, { log: "debug" })
+    .scrollIntoView({ log: false })
+    .should("be.visible", { log: false });
+});
