@@ -39,9 +39,14 @@
 // })
 
 Cypress.Commands.add("safeGet", (locator, options) => {
-  return cy
-    .get(locator)
-    .should("have.length", 1, { log: "debug" })
-    .scrollIntoView({ log: false })
-    .should("be.visible", { log: false });
+  return (
+    cy
+      .get(locator)
+      // I'd like to be able to not log this if it succeeds because it adds a bunch of spam in the sidebar
+      .should("have.length", 1, { log: false })
+      // This actually does work, yay!
+      .scrollIntoView({ log: false })
+      // Or maybe instead of "false", we could set a log level instead
+      .should("be.visible", { log: "DEBUG" })
+  );
 });
